@@ -23,7 +23,27 @@ class Knight {
     });
     return possibleMoves;
   }
+  validate(start, dest) {
+    if (
+      start[0] >= 0 &&
+      start[1] >= 0 &&
+      start[0] < 8 &&
+      start[1] < 8 &&
+      dest[0] >= 0 &&
+      dest[1] >= 0 &&
+      dest[0] < 8 &&
+      dest[1] < 8
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   knightMoves(start, dest) {
+    if (!this.validate(start, dest)) {
+      console.log("Enter valid data");
+      return;
+    }
     let queue = [];
     let visited = [];
     let distance = [];
@@ -51,20 +71,20 @@ class Knight {
         visited[current] = true;
       } else {
         let path = [];
-        let fullPath = "";
+        let fullPathString = "";
         path.push(dest);
         while (pre[dest] instanceof Array) {
           path.push(pre[dest]);
           dest = pre[dest];
         }
         for (let i = path.length - 1; i >= 0; i--) {
-          fullPath += "[" + path[i].toString() + "] -> ";
+          fullPathString += "[" + path[i].toString() + "] -> ";
         }
         console.log("You made it in", distance[current], "moves!");
-        console.log("This is your path: ", fullPath.slice(0, -3));
+        console.log("This is your path: ", fullPathString.slice(0, -3));
       }
     }
   }
 }
 let knight = new Knight();
-knight.knightMoves([0, 0], [4, 6]);
+knight.knightMoves([0, 6], [4, 6]);
